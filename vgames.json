@@ -1,0 +1,57 @@
+{
+    "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+    "width": "container",
+    "height": 400,
+
+    "title": {"text": "Average video game sales"},
+    "data": {
+        "url": "./vgsales.csv"
+    },
+    "params": [
+        {
+            "name": "Select_Year",
+            "value": 2020,
+            "bind":{
+                "input":"range",
+                "min": 1981 ,
+                "max": 2020,
+                "step": 1,
+                "name": "Range of year"
+            }
+            
+        }
+    ],
+
+    "transform": [
+        {"filter": {"field": "Year", "valid": true}},
+        {"filter": "datum.Year != 2017"},
+        {"filter": "datum.Year < Select_Year"}
+    ],
+    "layer":[
+        {
+            "mark": { "type":"bar", "tooltip":true},
+            "encoding": {
+                "x":{"field":"Year"},
+                "y":{
+                    "field":"Global_Sales" ,
+                    "aggregate":"average", 
+                    "title":"Global sales percentage",
+                    "axis" : {"format": ".1f"}
+                }
+            }
+        },
+        {
+            "mark": {
+                "type": "text",
+                "align": "center",
+                "dy": -10
+            },
+            "encoding": {
+                "x":{"field": "Year"},
+                "y":{"field": "Global_Sales", "aggregate":"average"},
+                "text":{"field": "Global_Sales", "aggregate":"average", "format": ".1f"}
+            }
+        }
+    ]
+
+}

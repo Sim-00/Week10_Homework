@@ -1,6 +1,6 @@
 {
     "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-    "width": 800,
+    "width": "container",
     "height": 500,
     "background": "#383434",
     "title": {"text": "Average Malaria cases from 2000 - 2017", "color":"white"},
