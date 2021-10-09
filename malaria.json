@@ -1,0 +1,48 @@
+{
+    "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+    "width": 800,
+    "height": 500,
+    "background": "#383434",
+    "title": {"text": "Average Malaria cases from 2000 - 2017", "color":"white"},
+    "projection": {"type": "equalEarth"},
+    "data": {
+        "url": "./global.topojson",
+        "format": {"type": "topojson", "feature": "global"}
+    },
+    "transform": [
+        {
+            "lookup": "properties.name",
+            "from": {
+                "data": {
+                    "url": "./reported_numbers.csv"
+                },
+                "key": "Country",
+                "fields": ["Cases"]
+            }
+        }
+    ],
+    "mark": {"type": "geoshape"},
+    "encoding": {
+        "color": {
+            "field": "Cases",
+            "type": "quantitative",
+            "scale": {
+                "type": "ordinal",
+                "domain": [1000, 5000, 10000, 100000, 1000000, 5000000],
+                "range":  ["#ffffd4","#fee391","#fec44f","#fe9929","#ec7014","#cc4c02","#8c2d04"]
+            },
+            "legend":{
+                "titleColor": "white",
+                "labelColor":"white"
+            }
+        },
+        "tooltip": [{
+            "field":"properties.name",
+            "title": "Country"
+        },{   
+            "field": "Cases",
+            "type": "quantitative",
+            "title": "Number of cases"
+        }]
+    }
+}
